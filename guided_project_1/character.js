@@ -20,6 +20,7 @@ addEventListener('DOMContentLoaded', () => {
 });
 
 async function getCharacter(id) {
+  // console.log("in getCharacters:", id)
   let character;
   try {
     character = await fetchCharacter(id)
