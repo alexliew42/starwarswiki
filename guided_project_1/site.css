@@ -74,6 +74,10 @@ h1#name {
   margin: 50px;
 }
 
+table, th, td {
+  border:1px solid black;
+}
+
 #generalInfo {
   display: flex;
   flex-wrap: wrap;
