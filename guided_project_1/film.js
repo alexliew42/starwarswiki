@@ -5,6 +5,7 @@ let producerSpan;
 let releaseDateSpan;
 let openingCrawlSpan;
 let charactersUl;
+let planetsUl;
 const baseUrl = `https://swapi2.azurewebsites.net/api`;
 
 // Runs on page load
@@ -16,6 +17,7 @@ addEventListener("DOMContentLoaded", () => {
   releaseDateSpan = document.querySelector("span#release_date");
   openingCrawlSpan = document.querySelector("span#opening_crawl");
   charactersUl = document.querySelector("#characters>ul");
+  planetsUl = document.querySelector("#planets>ul");
   const sp = new URLSearchParams(window.location.search);
   const id = sp.get("id");
   getFilm(id);
@@ -30,7 +32,8 @@ async function getFilm(id) {
     // console.log("id:", id);
     film.characters = await fetchCharacters(id);
     console.log("character data:", film.characters);
-    // film.planets = await fetchPlanets(id);
+    film.planets = await fetchPlanets(id);
+    console.log("planet data:", film.planets);
   } catch (error) {
     console.error(`Error reading film ${id} data.`, error.message);
   }
@@ -50,9 +53,9 @@ async function fetchCharacters(film) {
   return await fetch(characterUrl).then((res) => res.json());
 }
 
-async function fetchPlanets(id) {
-  console.log("in fetchPlanets with film:", i);
-  const url = `${baseUrl}/films/${id}/planets`;
+async function fetchPlanets(film) {
+  console.log("in fetchPlanets with film:", film);
+  const url = `${baseUrl}/films/${film}/planets`;
   const planets = await fetch(url).then((res) => res.json());
   return planets;
 }
@@ -70,4 +73,9 @@ const renderFilm = (film) => {
       `<li><a href="/character.html?id=${character.id}">${character.name}</li>`
   );
   charactersUl.innerHTML = characterList.join("");
+  const planetList = film?.planets?.map(
+    (planet) =>
+      `<li><a href="/planet.html?id=${planet.id}">${planet.name}</li>`
+  );
+  planetsUl.innerHTML = planetList.join("");
 };
