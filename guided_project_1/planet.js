@@ -49,13 +49,25 @@ async function getFilms(id) {
     return film
 }
 
+async function checkClimate(planet) {
+    console.log(nameH1)
+    first_climate = nameH1.textContent.split(", ")
+    if (planet?.climate === "temperate") {
+        first_climate[0].style.color = "green";
+    } else if (planet?.climate === "frozen") {
+        first_climate[0].style.color = "blue";
+    } console.log(first_climate)
+}
+
+
 const renderPlanet = planet => {
     document.title = `SWAPI - ${planet?.name}`;  // Just to make the browser tab say their name
     nameH1.textContent = planet?.name;
-    nameTD.textContent = planet?.name;
-    climateTD.textContent = planet?.climate;
-    terrainTD.textContent = planet?.terrain;
-    gravityTD.textContent = planet?.gravity;
+    checkClimate(planet)
+    nameTD.textContent = " " + planet?.name;
+    climateTD.textContent = " " + planet?.climate;
+    terrainTD.textContent = " " + planet?.terrain;
+    gravityTD.textContent = " " + planet?.gravity;
     populationTD.textContent = planet?.population;
     const characterList = planet?.character?.map(c => `<li><a href="/character.html?id=${c.id}"> ${c.name}</li>`)
     characterSPAN.innerHTML = characterList.join("");
